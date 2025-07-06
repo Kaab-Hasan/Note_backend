@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  notes     Note[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Note {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String        @db.Text
+  isProtected Boolean       @default(false) @map("is_protected")
+  password    String?
+  owner       User          @relation(fields: [ownerId], references: [id])
+  ownerId     Int           @map("owner_id")
+  versions    NoteVersion[]
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamp()
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamp()
+
+  @@map("notes")
+}
+
+model NoteVersion {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  note        Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  noteId      Int      @map("note_id")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp()
+
+  @@map("note_versions")
+} 
