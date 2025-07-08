@@ -29,7 +29,7 @@ try {
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: ["https://note-frontend-jet.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -40,7 +40,7 @@ const io = new Server(httpServer, {
 
 // Middleware
 app.use(cors({ 
-  origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
+  origin: ["https://note-frontend-jet.vercel.app/"],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
