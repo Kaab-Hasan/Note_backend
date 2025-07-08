@@ -19,6 +19,9 @@ const seedDatabase = require('./utils/seedData');
 const app = express();
 const httpServer = createServer(app);
 
+// Frontend URL for CORS (use environment variable if available, otherwise fallback to hardcoded)
+const FRONTEND_URL = process.env.FRONTEND_URL || "https://note-frontend-jet.vercel.app";
+
 let prisma;
 try {
   prisma = new PrismaClient();
